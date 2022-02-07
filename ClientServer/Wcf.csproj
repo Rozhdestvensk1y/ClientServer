@@ -5,8 +5,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A33B106E-7910-4EC5-9026-DAA27E7BF4DD}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>ClientServer</RootNamespace>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Wcf</RootNamespace>
     <AssemblyName>ClientServer</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -33,11 +33,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientServer.cs" />
+    <Compile Include="Help.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Service.cs" />
   </ItemGroup>

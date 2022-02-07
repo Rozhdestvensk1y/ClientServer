@@ -5,17 +5,18 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 
-namespace ClientServer
+namespace Wcf
 {
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class Service : IService
     {
-        List<ClientServer> users = new List<ClientServer> ();
+        List<ServerUser> users = new List<ServerUser> ();
         int nextId = 1;
+        public int maxRequests = Help.ReadInt64("Введите максимальное количество запросов к серверу:");
         public int Connect(string name)
         {
-            ClientServer user = new ClientServer()
+            ServerUser user = new ServerUser()
             {
                 Id = nextId,
                 Name = name,
@@ -23,6 +24,7 @@ namespace ClientServer
             };
             nextId++;
             users.Add(user);
+            Console.WriteLine($"Подключен клиент {user.Name} id{user.Id}");
             return user.Id;
             
         }
@@ -34,7 +36,7 @@ namespace ClientServer
             {
                 users.Remove(user);
             }
-            throw new NotImplementedException();
+            Console.WriteLine($"Отключен клиент id{user.Id} с именем {user.Name}");
         }
 
         public void DoWork()
@@ -58,15 +60,22 @@ namespace ClientServer
 
         public void SendMsg(string msg, int id)
         {
-            string answer = DateTime.Now.ToShortTimeString();
-            string PalOrNot = IsPalindrome(msg);
-            var user = users.FirstOrDefault(i => i.Id == id);
-            if (user != null)
+            foreach (var item in users)
             {
-               answer += ":" + user.Name + " " + PalOrNot;
+                if (item.Id == id)
+                {
+                    Console.WriteLine($"Клиент id{id} отправил сообщение {msg}");
+                    string answer = DateTime.Now.ToShortTimeString();
+                    string PalOrNot = IsPalindrome(msg);
+                    var user = users.FirstOrDefault(i => i.Id == id);
+                    if (user != null)
+                    {
+                        answer += ":" + user.Name + " " + PalOrNot;
+                    }
+                    item.operationContext.GetCallbackChannel<IServiceCallBack>().CallBackMsg(answer);
+                    break;
+                }
             }
-            user.operationContext.GetCallbackChannel<IServiceCallBack>().CallBackMsg(answer);
         }
-
     }
 }

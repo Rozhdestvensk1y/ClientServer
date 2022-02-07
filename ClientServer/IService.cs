@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 
-namespace ClientServer
+namespace Wcf
 {
     [ServiceContract(CallbackContract = typeof(IServiceCallBack))]
     public interface IService
@@ -15,12 +15,16 @@ namespace ClientServer
         [OperationContract]
         void Disconect(int id);
 
-        bool IsPalindrome(string msg);
+        [OperationContract]
+        string IsPalindrome(string msg);
+
+        [OperationContract(IsOneWay = true)]
+        void SendMsg(string msg, int id);
 
     }
     public interface IServiceCallBack
     {
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void CallBackMsg(String msg);
 
     }
