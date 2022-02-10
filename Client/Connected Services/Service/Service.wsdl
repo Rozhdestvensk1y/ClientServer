@@ -59,6 +59,9 @@
   <wsdl:message name="IService_CallBackMsg_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:CallBackMsg" />
   </wsdl:message>
+  <wsdl:message name="IService_MsgBoxError_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:MsgBoxError" />
+  </wsdl:message>
   <wsdl:portType name="IService">
     <wsdl:operation name="Connect">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/Connect" message="tns:IService_Connect_InputMessage" />
@@ -77,6 +80,9 @@
     </wsdl:operation>
     <wsdl:operation name="CallBackMsg">
       <wsdl:output wsaw:Action="http://tempuri.org/IService/CallBackMsg" message="tns:IService_CallBackMsg_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MsgBoxError">
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/MsgBoxError" message="tns:IService_MsgBoxError_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IService" type="tns:IService">
@@ -117,6 +123,12 @@
     </wsdl:operation>
     <wsdl:operation name="CallBackMsg">
       <soap12:operation soapAction="http://tempuri.org/IService/CallBackMsg" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MsgBoxError">
+      <soap12:operation soapAction="http://tempuri.org/IService/MsgBoxError" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

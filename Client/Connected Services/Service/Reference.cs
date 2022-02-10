@@ -34,10 +34,10 @@ namespace Client.Service {
         System.Threading.Tasks.Task<string> IsPalindromeAsync(string msg);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/SendMsg")]
-        void SendMsg(string msg, int id);
+        void SendMsg(string msg, string fileName, int id);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/SendMsg")]
-        System.Threading.Tasks.Task SendMsgAsync(string msg, int id);
+        System.Threading.Tasks.Task SendMsgAsync(string msg, string fileName, int id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -45,6 +45,9 @@ namespace Client.Service {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/CallBackMsg")]
         void CallBackMsg(string msg);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/MsgBoxError")]
+        void MsgBoxError(string msg);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -99,12 +102,12 @@ namespace Client.Service {
             return base.Channel.IsPalindromeAsync(msg);
         }
         
-        public void SendMsg(string msg, int id) {
-            base.Channel.SendMsg(msg, id);
+        public void SendMsg(string msg, string fileName, int id) {
+            base.Channel.SendMsg(msg, fileName, id);
         }
         
-        public System.Threading.Tasks.Task SendMsgAsync(string msg, int id) {
-            return base.Channel.SendMsgAsync(msg, id);
+        public System.Threading.Tasks.Task SendMsgAsync(string msg, string fileName, int id) {
+            return base.Channel.SendMsgAsync(msg, fileName, id);
         }
     }
 }

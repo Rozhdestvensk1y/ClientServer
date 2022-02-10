@@ -13,7 +13,7 @@
      Background="{DynamicResource MaterialDesignPaper}"
      FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="245" Width="296" Closing="Window_Closing">
+        Title="MainWindow" Height="250" Width="311" Closing="Window_Closing">
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="23"/>
@@ -21,12 +21,14 @@
             <RowDefinition Height="63*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <TextBox x:Name="UserName" TextWrapping="Wrap" Width="120" HorizontalAlignment="Left" VerticalAlignment="Stretch" xmlns:HintAssist.Hint="Логин"/>
-            <Button x:Name="Connect" Content="Connect" Width="72" Margin="5,2,5,2" FontSize="9" Height="20" Click="Connect_click"/>
+            <TextBox x:Name="UserName" TextWrapping="Wrap" Width="101" VerticalAlignment="Stretch" xmlns:HintAssist.Hint="Логин"/>
+            <Button x:Name="Connect" Content="Подключиться" Width="91" Margin="5,2,5,2" FontSize="8" Height="20" Click="Connect_click"/>
+            <ProgressBar x:Name="ProgressAnswer" Height="9" Width="85"/>
         </StackPanel>
         <ListBox x:Name="Chat" Grid.Row="1" Margin="0,0,0,0"/>
-        <StackPanel Grid.Row="2">
-            <TextBox x:Name="ClientMsg" TextWrapping="Wrap" Text="TextBox" Width="120" HorizontalAlignment="Left" KeyDown="TextBox_KeyDown"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <TextBox x:Name="ClientMsg" TextWrapping="Wrap" Text="Выбрать файл" Width="96" IsReadOnlyCaretVisible="True" Background="#FF995FFF" Margin="10,5,0,5" CaretBrush="White" MouseDoubleClick="ClientMsg_MouseDoubleClick" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button x:Name="SendFileToServer" Content="Отправить файл" Height="24" Width="96" Margin="20,5,0,5" FontSize="8" Click="SendFileToServer_Click"/>
         </StackPanel>
 
     </Grid>

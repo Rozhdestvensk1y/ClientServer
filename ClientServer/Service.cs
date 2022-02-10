@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
-
+using System.Windows;
 namespace Wcf
 {
 
@@ -14,6 +14,7 @@ namespace Wcf
         List<ServerUser> users = new List<ServerUser> ();
         int nextId = 1;
         public int maxRequests = Help.ReadInt64("Введите максимальное количество запросов к серверу:");
+        public int currentRequests = 0;
         public int Connect(string name)
         {
             ServerUser user = new ServerUser()
@@ -58,24 +59,29 @@ namespace Wcf
             return "Является палиндромом";
         }
 
-        public void SendMsg(string msg, int id)
+        public void SendMsg(string msg, string fileName, int id)
         {
+            currentRequests++;
+            
             foreach (var item in users)
             {
-                if (item.Id == id)
-                {
-                    Console.WriteLine($"Клиент id{id} отправил сообщение {msg}");
-                    string answer = DateTime.Now.ToShortTimeString();
-                    string PalOrNot = IsPalindrome(msg);
-                    var user = users.FirstOrDefault(i => i.Id == id);
-                    if (user != null)
+                    if (item.Id == id)
                     {
-                        answer += ":" + user.Name + " " + PalOrNot;
+                        Console.WriteLine($"Клиент id{id} отправил сообщение {msg}");
+                        string answer = DateTime.Now.ToShortTimeString();
+                        string PalOrNot = IsPalindrome(msg);
+                        var user = users.FirstOrDefault(i => i.Id == id);
+                        if (user != null)
+                        {
+                            answer += ":" + "Файл " + fileName + " " + PalOrNot;
+                        }
+                        System.Threading.Thread.Sleep(1000);
+                        item.operationContext.GetCallbackChannel<IServiceCallBack>().CallBackMsg(answer);
+                        currentRequests--;
+                        break;
                     }
-                    item.operationContext.GetCallbackChannel<IServiceCallBack>().CallBackMsg(answer);
-                    break;
-                }
             }
         }
+        
     }
 }

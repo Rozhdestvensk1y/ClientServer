@@ -19,13 +19,16 @@ namespace Wcf
         string IsPalindrome(string msg);
 
         [OperationContract(IsOneWay = true)]
-        void SendMsg(string msg, int id);
+        void SendMsg(string msg, string fileName, int id);
 
     }
     public interface IServiceCallBack
     {
         [OperationContract(IsOneWay = true)]
         void CallBackMsg(String msg);
+
+        [OperationContract(IsOneWay = true)]
+        void MsgBoxError(String msg);
 
     }
 }
